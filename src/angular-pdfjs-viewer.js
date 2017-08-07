@@ -148,9 +148,9 @@
                         loaded[pageNum] = true;
                         numLoaded++;
                     });
-                    
-                    if (shouldDigest) $scope.$apply()
-                }, 200);
+
+                    if (shouldDigest) $scope.$apply();
+                }, 200, 0, false);
 
                 $element.on('$destroy', function() {
                     $interval.cancel(poller);
