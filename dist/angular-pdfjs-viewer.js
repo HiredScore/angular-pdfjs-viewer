@@ -412,6 +412,7 @@
                 }
                 
                 var poller = $interval(function () {
+                    var shouldDigest = false;
                     if (!window.PDFViewerApplication) {
                         return;
                     }
@@ -439,6 +440,7 @@
                         }
                         
                         if (pageNum in loaded) return;
+                        shouldDigest = true;
 
                         if (!initialised) onPdfInit();
                         
@@ -449,8 +451,9 @@
                         loaded[pageNum] = true;
                         numLoaded++;
                     });
+                    
+                    if (shouldDigest) $scope.$apply()
                 }, 200);
-
                 $element.on('$destroy', function() {
                     $interval.cancel(poller);
                 });
