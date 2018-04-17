@@ -100,7 +100,7 @@
                         window.removeEventListener('DOMMouseScroll', handleMouseWheel);
                         window.removeEventListener('mousewheel', handleMouseWheel);
                         
-                        var pages = document.querySelectorAll('.page');
+                        var pages = document.querySelectorAll('.pdfViewer.page');
                         angular.forEach(pages, function (page) {
                             angular.element(page).children().css('pointer-events', 'none');
                         });
@@ -126,7 +126,7 @@
                         console.warn("PDFViewerApplication.pdfViewer is not set");
                     }
 
-                    var pages = document.querySelectorAll('.page');
+                    var pages = document.querySelectorAll('.pdfViewer.page');
                     angular.forEach(pages, function (page) {
                         var element = angular.element(page);
                         var pageNum = element.attr('data-page-number');
@@ -150,7 +150,7 @@
                     });
 
                     if (shouldDigest) $scope.$apply();
-                }, 200, 0, false);
+                }, 1000, 0, false);
 
                 $element.on('$destroy', function() {
                     $interval.cancel(poller);
@@ -172,7 +172,7 @@
                 });
 
                 // watch other attributes
-                $scope.$watch(function () {
+                $element.on('$destroy', $scope.$watch(function () {
                     return $attrs;
                 }, function () {
                     if ($attrs.open === 'false') {
@@ -197,7 +197,7 @@
                     if ($attrs.height) {
                         document.getElementById('outerContainer').style.height = $attrs.height;
                     }
-                });
+                }));
             }
         };
     }]);
